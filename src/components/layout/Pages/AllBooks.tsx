@@ -1,17 +1,22 @@
 
+import BooksEdit from "@/actions/BooksEditForm";
 import Container from "@/components/Shared/Container";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import type { IBook } from "@/interfaces/interfaces";
 import { useGetBooksQuery } from "@/redux/api/baseApi";
+import { useState } from "react";
 import toast from "react-hot-toast";
 
 // Utility to derive Availability label from copies
-const availabilityLabel = (copies: number) => (copies > 0 ? "In stock" : "Out of stock");
+const availabilityLabel = (copies: number) => (copies > 0 ? "In stock" : "Un Available");
 const availabilityBadgeClass = (copies: number) =>
   copies > 0
     ? "bg-emerald-100 text-emerald-800 ring-1 ring-emerald-200"
     : "bg-rose-100 text-rose-800 ring-1 ring-rose-200";
 
 const AllBooks = () => {
+  const [openDialog, setOpenDialog] = useState(false);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
   const { data, isLoading, error } = useGetBooksQuery(undefined);
 
   if (isLoading) return <p>Loading...</p>;
@@ -20,13 +25,21 @@ const AllBooks = () => {
   const books: IBook[] = data?.data || [];
 
   const handleView = (book: IBook) => {
-    toast.success('Successfully viewed book!')
+    toast.success(` ${book.title} Successfully viewed book!`)
   };
-  // const handleEdit = (book: IBook) => alert(`Edit: ${book.title}`);
-  // const handleDelete = (book: IBook) => {
-  //   const ok = confirm(`Delete "${book.title}" ? This cannot be undone.`);
-  //   if (ok) alert("Deleted (demo)");
-  // };
+
+
+  const handleEdit = (_id:string) => {
+    setSelectedId(_id);
+    setOpenDialog(true);
+  };
+
+
+
+  const handleDelete = (book: IBook) => {
+    const ok = confirm(`Delete "${book.title}" ? This cannot be undone.`);
+    if (ok) alert("Deleted (demo)");
+  };
 
 
 
@@ -73,11 +86,12 @@ const AllBooks = () => {
                       View
                     </button>
                     <button
-                      onClick={() => handleEdit(b)}
+                      onClick={() => handleEdit(b._id)}
                       className="rounded-xl border border-gray-300 px-3 py-1.5 text-xs font-medium hover:bg-gray-50"
                     >
                       Edit
                     </button>
+
                     <button
                       onClick={() => handleDelete(b)}
                       className="rounded-xl border border-rose-300 px-3 py-1.5 text-xs font-medium text-rose-700 hover:bg-rose-50"
@@ -90,6 +104,19 @@ const AllBooks = () => {
             ))}
           </tbody>
         </table>
+
+         {/* Dialog with BooksEdit component inside */}
+      <Dialog  open={openDialog} onOpenChange={setOpenDialog}>
+        <DialogContent className="sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="text-center font-bold">Edit Book</DialogTitle>
+          </DialogHeader>
+
+          {selectedId && (
+            <BooksEdit id={selectedId} /> 
+          )}
+        </DialogContent>
+      </Dialog>
       </div>
 
       {/* Mobile Card List */}
@@ -134,7 +161,7 @@ const AllBooks = () => {
                 View
               </button>
               <button
-                onClick={() => handleEdit(b)}
+                onClick={() => handleEdit(b._id)}
                 className="rounded-xl border border-gray-300 px-3 py-1.5 text-xs font-medium hover:bg-gray-50"
               >
                 Edit
