@@ -23,13 +23,15 @@ export const baseApi = createApi({
       invalidatesTags:['Books']
     })
     ,
+
+    // Todo
     createBook: builder.mutation({
       query: (book) => ({
         url: "/books",
         method: "POST",
         body: book,
       }),
-      invalidatesTags: ['Books']
+
     }),
 
     
