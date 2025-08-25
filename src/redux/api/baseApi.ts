@@ -30,12 +30,19 @@ export const baseApi = createApi({
       }),
       invalidatesTags:['Books']
     }),
-    // Todo
     createBook: builder.mutation({
       query: (book) => ({
         url: "/books",
         method: "POST",
         body: book,
+      }),
+      invalidatesTags:['Books']
+    }),
+    borrowBook: builder.mutation({
+      query: (book) => ({
+        url: '/borrow',
+        method: "POST",
+        body: book
       }),
       invalidatesTags:['Books']
     }),
@@ -45,4 +52,4 @@ export const baseApi = createApi({
 
 });
 
-export const { useGetBooksQuery, useCreateBookMutation, useGetUniqueBooksQuery, useUpdateBookMutation,useDeleteBookMutation } = baseApi;
+export const { useGetBooksQuery, useCreateBookMutation, useGetUniqueBooksQuery, useUpdateBookMutation,useDeleteBookMutation,useBorrowBookMutation } = baseApi;
