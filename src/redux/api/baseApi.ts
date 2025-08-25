@@ -23,7 +23,13 @@ export const baseApi = createApi({
       invalidatesTags:['Books']
     })
     ,
-
+    deleteBook: builder.mutation({
+      query: (id) => ({
+        url: `/books/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags:['Books']
+    }),
     // Todo
     createBook: builder.mutation({
       query: (book) => ({
@@ -39,4 +45,4 @@ export const baseApi = createApi({
 
 });
 
-export const { useGetBooksQuery, useCreateBookMutation, useGetUniqueBooksQuery, useUpdateBookMutation } = baseApi;
+export const { useGetBooksQuery, useCreateBookMutation, useGetUniqueBooksQuery, useUpdateBookMutation,useDeleteBookMutation } = baseApi;

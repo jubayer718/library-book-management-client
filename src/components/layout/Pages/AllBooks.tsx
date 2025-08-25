@@ -3,7 +3,7 @@ import BooksEdit from "@/actions/BooksEditForm";
 import Container from "@/components/Shared/Container";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import type { IBook } from "@/interfaces/interfaces";
-import { useGetBooksQuery } from "@/redux/api/baseApi";
+import { useDeleteBookMutation, useGetBooksQuery } from "@/redux/api/baseApi";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -18,6 +18,7 @@ const AllBooks = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const { data, isLoading, error } = useGetBooksQuery(undefined);
+  const [deleteBook] = useDeleteBookMutation();
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error fetching books</p>;
@@ -36,9 +37,13 @@ const AllBooks = () => {
 
 
 
-  const handleDelete = (book: IBook) => {
-    const ok = confirm(`Delete "${book.title}" ? This cannot be undone.`);
-    if (ok) alert("Deleted (demo)");
+  const handleDelete = async(_id: string) => {
+    const res = await deleteBook(_id);
+    if (res.error) {
+      toast.error("Failed to delete book");
+    } else {
+      toast.success("Book deleted successfully");
+    }
   };
 
 
@@ -93,7 +98,7 @@ const AllBooks = () => {
                     </button>
 
                     <button
-                      onClick={() => handleDelete(b)}
+                      onClick={() => handleDelete(b._id)}
                       className="rounded-xl border border-rose-300 px-3 py-1.5 text-xs font-medium text-rose-700 hover:bg-rose-50"
                     >
                       Delete
@@ -167,7 +172,7 @@ const AllBooks = () => {
                 Edit
               </button>
               <button
-                onClick={() => handleDelete(b)}
+                onClick={() => handleDelete(b._id)}
                 className="rounded-xl border border-rose-300 px-3 py-1.5 text-xs font-medium text-rose-700 hover:bg-rose-50"
               >
                 Delete
