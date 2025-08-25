@@ -9,7 +9,7 @@ export const booksSlice = createSlice({
   initialState,
   reducers: {
     createBook: (state, action) => {
-      state.books.push(action.payload);
+      
     }
   },
 });
