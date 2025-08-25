@@ -8,3 +8,11 @@ export interface IBook{
   copies: number;
   available: boolean;
 }
+
+export interface TBorrow{
+  book: string;
+  quantity: number;
+  dueDate: string;
+  bookDetails?: IBook; // Optional detailed info about the book
+  totalQuantity?: number; // For summary, total quantity borrowed of this book
+}

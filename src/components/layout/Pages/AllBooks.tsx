@@ -107,6 +107,8 @@ const AllBooks = () => {
     }
   };
 
+  
+
   // ============= RENDER =============
   return (
     <Container className="my-12">
@@ -145,6 +147,12 @@ const AllBooks = () => {
                 </td>
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => navigate(`/viewBook/${b._id}`)}
+                      className="rounded-xl border border-gray-300 px-3 py-1.5 text-xs font-medium hover:bg-gray-50"
+                    >
+                      view
+                    </button>
                     <button
                       onClick={() => handleBorrow(b)}
                       className="rounded-xl border border-gray-300 px-3 py-1.5 text-xs font-medium hover:bg-gray-50"

@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 
+
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:9000/api" }),
@@ -10,6 +11,7 @@ export const baseApi = createApi({
       query: () => "/books",
       providesTags:['Books']
     }),
+    
     getUniqueBooks: builder.query({
       query: (id) => `/books/${id}`,
     }),
@@ -46,10 +48,12 @@ export const baseApi = createApi({
       }),
       invalidatesTags:['Books']
     }),
-
-    
+    getBorrowedBooks: builder.query({
+      query: () => '/borrow',
+      providesTags: ['Books']
+    })
   }),
 
 });
 
-export const { useGetBooksQuery, useCreateBookMutation, useGetUniqueBooksQuery, useUpdateBookMutation,useDeleteBookMutation,useBorrowBookMutation } = baseApi;
+export const { useGetBooksQuery, useCreateBookMutation, useGetUniqueBooksQuery, useUpdateBookMutation,useDeleteBookMutation,useBorrowBookMutation, useGetBorrowedBooksQuery } = baseApi;
