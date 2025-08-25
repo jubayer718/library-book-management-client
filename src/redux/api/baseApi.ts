@@ -37,7 +37,7 @@ export const baseApi = createApi({
         method: "POST",
         body: book,
       }),
-
+      invalidatesTags:['Books']
     }),
 
     

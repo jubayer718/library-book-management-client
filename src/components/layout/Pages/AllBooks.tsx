@@ -1,7 +1,8 @@
 
 import BooksEdit from "@/actions/BooksEditForm";
 import Container from "@/components/Shared/Container";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import type { IBook } from "@/interfaces/interfaces";
 import { useDeleteBookMutation, useGetBooksQuery } from "@/redux/api/baseApi";
 import { useState } from "react";
@@ -19,6 +20,7 @@ const AllBooks = () => {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const { data, isLoading, error } = useGetBooksQuery(undefined);
   const [deleteBook] = useDeleteBookMutation();
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error fetching books</p>;
@@ -36,17 +38,25 @@ const AllBooks = () => {
   };
 
 
-
-  const handleDelete = async(_id: string) => {
-    const res = await deleteBook(_id);
-    if (res.error) {
-      toast.error("Failed to delete book");
-    } else {
-      toast.success("Book deleted successfully");
-    }
+const handleDelete = (id: string) => {
+    setSelectedId(id);
+    setOpenDeleteDialog(true);
   };
 
 
+   const confirmDelete = async () => {
+    if (!selectedId) return;
+    try {
+      await deleteBook(selectedId).unwrap();
+      toast.success("Book deleted successfully");
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (err) {
+      toast.error("Failed to delete book");
+    } finally {
+      setOpenDeleteDialog(false);
+      setSelectedId(null);
+    }
+  };
 
   return (
     <Container className="my-12">
@@ -181,6 +191,24 @@ const AllBooks = () => {
           </div>
         ))}
       </div>
+
+         {/* Delete Confirmation Dialog */}
+      <Dialog open={openDeleteDialog} onOpenChange={setOpenDeleteDialog}>
+        <DialogContent className="sm:max-w-sm">
+          <DialogHeader>
+            <DialogTitle>Confirm Delete</DialogTitle>
+          </DialogHeader>
+          <p className="mt-2 text-sm text-gray-600">
+            Are you sure you want to delete this book? This action cannot be undone.
+          </p>
+          <DialogFooter className="flex justify-end gap-2 mt-4">
+            <DialogClose asChild>
+              <Button variant="outline" onClick={() => setOpenDeleteDialog(false)}>Cancel</Button>
+            </DialogClose>
+            <Button variant="destructive" onClick={confirmDelete}>Delete</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Container>
   );
 };
