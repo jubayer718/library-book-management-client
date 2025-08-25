@@ -8,14 +8,14 @@ export const baseApi = createApi({
     getBooks: builder.query({
       query: () => "/books",
     }),
-    // createBook: builder.mutation({
-    //   query: (book) => ({
-    //     url: "/books",
-    //     method: "POST",
-    //     body: book,
-    //   }),
-    // }),
+    createBook: builder.mutation({
+      query: (book) => ({
+        url: "/books",
+        method: "POST",
+        body: book,
+      }),
+    }),
   }),
 });
 
-export const { useGetBooksQuery} = baseApi;
+export const { useGetBooksQuery, useCreateBookMutation } = baseApi;
