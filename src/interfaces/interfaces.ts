@@ -1,4 +1,5 @@
 export interface IBook{
+  id:string
   title: string;
   author: string;
   genre: "FICTION" | "NON_FICTION" | "SCIENCE" | "HISTORY" | "BIOGRAPHY" | "FANTASY";

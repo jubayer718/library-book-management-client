@@ -2,6 +2,7 @@ import Container from "@/components/Shared/Container";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useForm,  type FieldValues, type SubmitHandler } from "react-hook-form";
 
 
@@ -20,7 +21,7 @@ const CreateBooks = () => {
           {/* Title */}
         <FormField
           control={form.control}
-          name="username"
+          name="title"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Title</FormLabel>
@@ -45,9 +46,32 @@ const CreateBooks = () => {
           />
 
 
-          {/* TODO */}
           {/* Genre */}
-
+       <FormField
+                
+          control={form.control}
+                name="genre"
+          render={({ field }) => (
+            <FormItem  >
+              <FormLabel>Priority</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl className="w-full">
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a Genre to display" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="FICTION">Fiction</SelectItem>
+                  <SelectItem value="NON_FICTION">Non-Fiction</SelectItem>
+                  <SelectItem value="SCIENCE">Science</SelectItem>
+                  <SelectItem value="FANTASY">Fantasy</SelectItem>
+                  <SelectItem value="HISTORY">History</SelectItem>
+                  <SelectItem value="BIOGRAPHY">Biography</SelectItem>
+                </SelectContent>
+              </Select>
+            </FormItem>
+          )}
+              />
 
           {/* isbn */}
         <FormField
@@ -85,25 +109,34 @@ const CreateBooks = () => {
             <FormItem>
               <FormLabel>Copies</FormLabel>
               <FormControl>
-                <Input placeholder="Enter number of copies" {...field} />
+                <Input type="number" placeholder="Enter number of copies" {...field} />
               </FormControl>
             </FormItem>
           )}
           />
-{/* TODO */}
+
           {/* Available */}
-        <FormField
+        <FormField  
           control={form.control}
-          name="available"
+                name="available"
+
           render={({ field }) => (
-            <FormItem>
+            <FormItem  >
               <FormLabel>Available</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter number of available copies" {...field} />
-              </FormControl>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl className="w-full">
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select availability" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="true">Yes</SelectItem>
+                  <SelectItem value="false">No</SelectItem>
+                </SelectContent>
+              </Select>
             </FormItem>
           )}
-        />
+              />
 
         <Button type="submit">Submit</Button>
       </form>

@@ -14,8 +14,8 @@ const MainLayout = () => {
        <Outlet />
       </main>
 
-     <Container>
-       <footer className="flex justify-center items-center">
+      <Container className="border-t-2 bg-gradient-to-tr from-cyan-200 to-blue-50">
+       <footer className="flex justify-center items-center ">
          <p>Library Management System &copy; 2023</p>
        </footer>
      </Container>
