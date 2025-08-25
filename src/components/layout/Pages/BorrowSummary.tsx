@@ -1,11 +1,12 @@
+import Container from "@/components/Shared/Container";
 
 
 const BorrowSummary = () => {
   return (
-    <div>
+    <Container className="my-12">
       <h1>Borrow Summary</h1>
       <p>This page will show the summary of borrowed books.</p>
-    </div>
+    </Container>
   );
 };
 

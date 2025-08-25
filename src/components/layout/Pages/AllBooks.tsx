@@ -1,10 +1,11 @@
+import Container from "@/components/Shared/Container";
 
 
 const Home = () => {
   return (
-    <div>
+    <Container className="my-12">
       <h1>Welcome to the Library Management System</h1> 
-    </div>
+    </Container>
   );
 };
 

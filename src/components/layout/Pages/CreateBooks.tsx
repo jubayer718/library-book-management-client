@@ -1,8 +1,10 @@
+import Container from "@/components/Shared/Container";
 
 
 const CreateBooks = () => {
   return (
-    <div>
+    <Container className="my-12">
+      <div>
       <h1>Create a New Book</h1>
       <form>
         <div>
@@ -20,6 +22,7 @@ const CreateBooks = () => {
         <button type="submit">Create Book</button>
       </form> 
     </div>
+    </Container>
   );
 };
 

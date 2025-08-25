@@ -118,3 +118,10 @@
     @apply bg-background text-foreground;
   }
 }
+
+.active {
+ background-color: rgba(0, 0, 0, 0.5);
+ color:  #ffffff;
+ padding: 8px 16px;
+ border-radius: 0.375rem;
+}

@@ -1,12 +1,15 @@
 import { NavLink } from "react-router";
+import Container from "../Shared/Container";
+
 
 
 const Navbar = () => {
 
 
   return (
-    <div>
-      <ul className="flex justify-center items-center space-x-4">
+
+      <Container className="border-b-2  bg-linear-to-t from-sky-300 to-indigo-400 py-5 fixed top-0 left-0 right-0 z-50 ">
+         <ul className="flex justify-center items-center space-x-4  ">
         <li>
           <NavLink to="/">All Books</NavLink>
         </li>
@@ -17,7 +20,8 @@ const Navbar = () => {
           <NavLink to="/summary">Borrow Summary</NavLink>
         </li>
       </ul>
-    </div>
+     </Container>
+    
   );
 };
 
